@@ -1,0 +1,30 @@
+db:
+    build: .
+    command: supervisord -n -c /etc/supervisor/supervisord.conf
+    hostname: pglocal
+    ports:
+        - "5432:5432"
+    volumes_from:
+        - data
+data:
+    build: .
+    volumes:
+        - /var/lib/postgresql
+    command: true
+
+follower:
+    build: .
+    command: supervisord -n -c /etc/supervisor/supervisord.conf
+    hostname: pgfollowerlocal
+    environment:
+        - MASTER_HOST=192.168.59.103
+        - MASTER_HOST_PORT=5432
+    ports:
+        - "5433:5432"
+    volumes_from:
+        - followdata
+followdata:
+    build: .
+    volumes:
+        - /var/lib/postgresql
+    command: true

@@ -1,5 +1,7 @@
-docker-postgres
+postgres
 ===============
+
+Based on https://github.com/cpuguy83/docker-postgres
 
 Runs postgres as either standalone, or master/slave
 
@@ -17,3 +19,11 @@ Give special attention to the NO_REPLICATION setting, if this is NOT set then a 
 
 You can either pass these options into the docker or add your customisations to /etc/default/postgres
 
+Remote replication
+---------------------
+If you want to have replication work across physical hosts then you need to set two environment variables in the follower(s) containers.
+### Configuration Options (Env vars)
+```
+MASTER_HOST=IP address for master
+MASTER_HOST_PORT=Port the master is exposed on
+```
